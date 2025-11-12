@@ -3,7 +3,7 @@
 
 @section('contenido')
     <section class="d-flex justify-content-center">
-        <form class="m-4 p-5 rounded-4 text-white bg-primary bg-opacity-75" method="post" action="/cargar">
+        <form class="m-4 p-5 rounded-4 text-white bg-primary" method="post" action="/cargar">
             @csrf
             <b class="text-center fs-4">Crear nueva licencia</b>
             <p>complete los campos para registrar una nueva licencia</p>

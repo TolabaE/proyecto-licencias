@@ -1,26 +1,41 @@
 # Proyecto realizado para el ejercito AMBs
 
-### para poder levantar el proyecto necesitas instalar bootstrap a travez de la linea de comandos.
+### una vez clonado el repositorio vamos a abrir la terminal y ejecutamos las siguientes comandos.
 
-## primero vamos a instalar bootstrap por la linea de comando con npm
+* Ejecuta Composer para descargar el código de Laravel, Livewire (si lo usa), y cualquier otra librería de PHP a la carpeta vendor/:
 
-* El paquete laravel/ui contiene los comandos de Artisan para instalar las configuraciones predefinidas de frontend (Bootstrap, Vue, React).
+` composer install `
 
-``` composer require laravel/ui ```
+* vamos a clonar el archivo .env para Generar la Clave de Aplicación.
 
-* Una vez instalado el paquete, puedes ejecutar el comando ui para generar los archivos necesarios para Bootstrap.
+` cp .env.example .env `
 
-` php artisan ui bootstrap `
+Aunque no uses variables de entorno, la clave de aplicación sigue siendo necesaria para la seguridad.
+
+`php artisan key:generate `
+
+* luego navega hasta la carpeta: database/ y ahi crea un archivo llamado "database.sqlite", Ahora que el archivo existe, Laravel puede conectarse y usarlo.
+
+* vamos a ejecutar las migraciones.
+
+` php artisan migrate `
+
+
 
 * Laravel utiliza npm (Node Package Manager) para gestionar las librerías de frontend (como Bootstrap y sus dependencias de JavaScript, como Popper).
 
 ` npm install `
 
-* y finalmente dale al famoso comando necesario para que todo compile.
+* ahora dale al famoso comando necesario para que todo compile.
 
 `npm run dev`
 
 ¡¡¡ recorda siempre compilar bootstrap y despues laravel ¡¡¡
+
+* y finalmente levantamos el servidor laravel usando
+
+`php artisan serve`
+
 
 -- --
 ## herramientas utilizas 
