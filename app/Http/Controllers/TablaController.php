@@ -34,9 +34,15 @@ class TablaController extends Controller
         $response = Http::get($this->url_api);
         $resultado = $response->json();
         $licencias = $resultado['licencias'];
-        dd($licencias);
-        // $licenciaEditar = $licencias[$id];
-        dd($licenciaEditar);
 
+        $licencia_encontrada = null;
+        //buscamos por id la licencia que queremos actualizar y obtener sus valores.
+        foreach ($licencias as $usuario) {
+            if ($usuario['id'] === (int) $id) {
+                $licencia_encontrada = $usuario;
+                break;//detenemos el proceso.
+            }
+        }
+        return view('editor',['licencia' => $licencia_encontrada]);
     }
 }

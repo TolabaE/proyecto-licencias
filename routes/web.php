@@ -12,10 +12,13 @@ Route::get('/exitos', function () {
     return view('exitos');
 });
 
+Route::get('/editar',function(){
+    return view('editar');
+});
+
 Route::get('/registro',[FormController::class,'vistaForm']);
-
-
 Route::get('/tabla',[TablaController::class,'todasLicencias']);
+
 Route::put('/update/{id}',[TablaController::class,'actualizarLicencia'])->name('actualizar');
 Route::delete('/delete/{id}',[TablaController::class,'eliminarLicencia'])->name('eliminar');
 
