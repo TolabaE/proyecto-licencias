@@ -6,10 +6,8 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\VistaController;
 
 Route::get('/', [VistaController::class,'appVista']);
-Route::get('exitos',[VistaController::class,'exitoVista']);
-Route::get('editar',[VistaController::class,'editarVista']);
-
-Route::get('/registro',[FormController::class,'vistaForm']);
+Route::get('/editar',[VistaController::class,'editarVista']);
+Route::get('/registro',[VistaController::class,'formVista']);
 Route::get('/tabla',[TablaController::class,'todasLicencias']);
 
 Route::put('/buscar/{id}',[TablaController::class,'buscarLicencia'])->name('actualizar');

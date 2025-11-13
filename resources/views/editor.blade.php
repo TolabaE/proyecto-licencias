@@ -2,7 +2,7 @@
 
 @section('contenido')
     <section class="d-flex justify-content-center">
-        <form class="m-4 p-5 rounded-4 text-white bg-primary bg-opacity-75" method="post" action="{{ route('update', ['id' => $licencia['id']]) }}">
+        <form class="m-4 p-5 rounded-4 text-white bg-primary" method="post" action="{{ route('update', ['id' => $licencia['id']]) }}">
             @csrf
             <div class="text-center">
                 <b class="text-center fs-4">Modificar la licencia</b>
@@ -56,6 +56,8 @@
                         <?php if ($licencia['provincia'] == 'Cordoba') {echo 'selected';} ?> >Cordoba</option>
                     <option value="Corrientes"
                         <?php if ($licencia['provincia'] == 'Corrientes') {echo 'selected';} ?> >Corrientes</option>
+                    <option value="Mendoza"
+                        <?php if ($licencia['provincia'] == 'Mendoza') {echo 'selected';} ?> >Mendoza</option>
                     <option value="Misiones"
                         <?php if ($licencia['provincia'] == 'Misiones') {echo 'selected';} ?> >Misiones</option>
                     <option value="Neuquen"
@@ -91,7 +93,7 @@
                     <label for="OD">Orden del dia: </label>
                     <input type="text" placeholder="Entre 6 y 10 caracteres" name="ordenDia" value="<?php echo htmlspecialchars($licencia['ordenDia']); ?>">
                 </div>
-                <input type="submit" class="btn btn-success" value="Actualizar" >
+                <input type="submit" class="btn btn-danger" value="Actualizar" >
             </div>
         </form>
     </section>

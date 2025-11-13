@@ -23,8 +23,8 @@
                 </div>
                 <select name="tipo"  required >
                     <option value="">Seleccione el tipo</option>
-                    <option value="licencia extraordinaria" >Licencia Ordinaria</option>
-                    <option value="licencia Ordinaria">Licencia Extraordinaria</option>
+                    <option value="Licencia Extraordinaria" >Licencia Ordinaria</option>
+                    <option value="Licencia Ordinaria">Licencia Extraordinaria</option>
                 </select>
                 <label for="">Provincia:</label>
                 <select name="provincia" required>
@@ -37,6 +37,7 @@
                     <option value="Chubut">Chubut</option>
                     <option value="Cordoba">Cordoba</option>
                     <option value="Corrientes">Corrientes</option>
+                    <option value="Mendoza">Mendoza</option>
                     <option value="Misiones">Misiones</option>
                     <option value="Neuquen">Neuquen</option>
                     <option value="La Pampa">La pampa</option>

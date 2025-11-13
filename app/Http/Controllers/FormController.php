@@ -11,21 +11,17 @@ class FormController extends Controller
     
     //guardo la url.
     public $apiUrl = "http://localhost:5800/";
-    
-    public function vistaForm (){
-        return view('formulario');
-    }
 
     //metodo para guardar una licencia en la base de datos
     public function cargarLicencia(Request $request){
-        $datos_registro = $request->all(); //trae los valores que posee el formulario
-        
         try {
+            $datos_registro = $request->all(); //trae los valores que posee el formulario
             //envio los datos al sevidor
             $response = Http::post($this->apiUrl."insert", $datos_registro);
             $resultado = $response->json();
+            $status = "crear";// es un variable para manejar los estados de alerta en el frontend
             if (isset($resultado['status']) && $resultado['status'] == 200){
-                return view('exitos');
+                return view('alert',compact('status'));
             }else{
                 return view('error',[ 'response' => $resultado]);
             }
@@ -40,8 +36,9 @@ class FormController extends Controller
             $licenciaActualizada = $request->all();//obtengo los valores del formulario.
             $response = Http::post($this->apiUrl.'update/', $licenciaActualizada);
             $resultado = $response->json();
+            $status = "actualizar";
             if (isset($resultado['status']) && $resultado['status'] == 200){
-                return view('exitos');
+                return view('alert',compact('status'));
             }else{
                 return view('error',[ 'response' => $resultado]);
             }

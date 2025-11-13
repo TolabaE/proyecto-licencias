@@ -13,9 +13,10 @@ class TablaController extends Controller
         //indico la api con el id de la licencia a eliminar
         $response = Http::delete($this->urlApi."delete/$id");
         $resultado = $response->json();
+        $status = "eliminar";
         if (isset($resultado['status']) && $resultado['status'] == 200){
                 //si la respuesta es exitosa, retorna la vista con el mensaje exitoso.
-                return view('alert');
+                return view('alert',compact('status'));
             }else{
                 //caso contrario que me muestre el error en la vista.
                 return view('error',[ 'response' => $resultado]);

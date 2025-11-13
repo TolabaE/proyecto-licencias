@@ -24,7 +24,7 @@
         <script>
             Swal.fire({
                 icon: "error",
-                title: "ups algo salio mal!",
+                title: "valores incompletos",
                 text: "el formulario debe tener un campo mal cargado, vuelve a intentar.",
                 confirmButtonText: "OK",
             }).then((response)=>{
