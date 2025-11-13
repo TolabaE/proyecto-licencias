@@ -40,5 +40,5 @@ Aunque no uses variables de entorno, la clave de aplicación sigue siendo necesa
 -- --
 ## herramientas utilizas 
 * laravel -v 12
-* bootstrap v5
+* bootstrap -v 5
 * sweetalert2

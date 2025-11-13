@@ -3,9 +3,6 @@
 
 
 @section('contenido')
-<div>
-
-</div>
 <script>
     Swal.fire({
         icon: "success",

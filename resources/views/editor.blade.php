@@ -1,9 +1,8 @@
 @extends('app')
 
 @section('contenido')
-
     <section class="d-flex justify-content-center">
-        <form class="m-4 p-5 rounded-4 text-white bg-primary bg-opacity-75" method="post" action="/update">
+        <form class="m-4 p-5 rounded-4 text-white bg-primary bg-opacity-75" method="post" action="{{ route('update', ['id' => $licencia['id']]) }}">
             @csrf
             <div class="text-center">
                 <b class="text-center fs-4">Modificar la licencia</b>
@@ -16,18 +15,25 @@
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-column">
                         <label for="date_start">Fecha de Inicio: </label>
-                        <input type="date" name="fechaInicio" required value="<?php echo htmlspecialchars($licencia['fechaInicio']); ?>">
+                        <input type="date" name="fechaInicio" required value="<?php
+                            $fecha = $licencia['fechaInicio'];
+                            $fechaFormateada = substr($fecha,0,10);
+                            echo htmlspecialchars($fechaFormateada); ?>">
                     </div>
                     <div class="d-flex flex-column">
                         <label for="date_start">Fecha de Termino: </label>
-                        <input type="date" name="fechaFin" required value="<?php echo htmlspecialchars($licencia['fechaFin']); ?>">
+                        <input type="date" name="fechaFin" required value="<?php
+                            $fecha = $licencia['fechaFin'];
+                            $fechaFormateada = substr($fecha,0,10);//corta los primeros 9 numeros de la cadena => 2024-04-26T00:00:00.000Z
+                            echo htmlspecialchars($fechaFormateada); ?>">
                     </div>
                 </div>
+                <input type="hidden" name="id" value="<?php echo htmlspecialchars($licencia['id']); ?>">
                 <select name="tipo"  required >
                     <option value="">Seleccione el tipo</option>
-                    <option value="licencia Ordinaria"
+                    <option value="Licencia Ordinaria"
                         <?php if ($licencia['tipo'] == 'Licencia Ordinaria') {echo 'selected';} ?> >Licencia Ordinaria</option>
-                    <option value="licencia Extraordinaria"
+                    <option value="Licencia Extraordinaria"
                         <?php if ($licencia['tipo'] == 'Licencia Extraordinaria'){ echo 'selected';} ?> >Licencia Extraordinaria</option>
                 </select>
                 <label for="">Provincia:</label>
@@ -78,7 +84,7 @@
                         <?php if ($licencia['provincia'] == 'Ciudad Autonoma de Buenos Aires') {echo 'selected';} ?> >Ciudad autonoma de buenos aires</option>
                 </select>
                 <div class="d-flex flex-column gap-2">
-                    <label for="direccion">Localidad: </label>
+                    <label for="localidad">Localidad: </label>
                     <input type="text" placeholder="Ej:La plata" name="localidad" value="<?php echo htmlspecialchars($licencia['localidad']); ?>">
                     <label for="direccion">Direccion: </label>
                     <input type="text" placeholder="Ej: Av corrientes 2400" name="direccion" value="<?php echo htmlspecialchars($licencia['direccion']); ?>">

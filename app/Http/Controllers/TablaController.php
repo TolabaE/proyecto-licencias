@@ -6,12 +6,12 @@ use Illuminate\Support\Facades\Http;
 
 class TablaController extends Controller
 {
-    public $url_api = 'http://localhost:5800/';
+    public $urlApi = 'http://localhost:5800/';
 
     //metodo para eliminar una licencia por id
     public function eliminarLicencia($id){
         //indico la api con el id de la licencia a eliminar
-        $response = Http::delete($this->url_api."delete/$id");
+        $response = Http::delete($this->urlApi."delete/$id");
         $resultado = $response->json();
         if (isset($resultado['status']) && $resultado['status'] == 200){
                 //si la respuesta es exitosa, retorna la vista con el mensaje exitoso.
@@ -24,19 +24,20 @@ class TablaController extends Controller
 
     public function todasLicencias(){
         //hago un llamado al servidor para traer todos los valores y mostrarlo en la vista.
-        $response = Http::get($this->url_api);
+        $response = Http::get($this->urlApi);
         $datos = $response->json();//parseo los datos que vienen en json
         $registros = $datos['licencias'];//accedo al arreglo de registro
         return view('tabla',['registro' => $registros]);
     }
 
-    public function actualizarLicencia($id){
-        $response = Http::get($this->url_api);
+    public function buscarLicencia($id){
+        //llamamos a la api para traer todas las licencias.
+        $response = Http::get($this->urlApi);
         $resultado = $response->json();
         $licencias = $resultado['licencias'];
 
         $licencia_encontrada = null;
-        //buscamos por id la licencia que queremos actualizar y obtener sus valores.
+        //buscamos por id la licenciar y obtener sus valores.
         foreach ($licencias as $usuario) {
             if ($usuario['id'] === (int) $id) {
                 $licencia_encontrada = $usuario;

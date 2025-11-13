@@ -6,25 +6,37 @@
 <div>
     <div>
         @if($response['status'] == 500)
-            <p class="text-danger">Ha ocurrido un error!</p>
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "ups algo salio mal!",
+                text: "Ah ocurrido un error",
+                confirmButtonText: "OK",
+            }).then((response)=>{
+                if (response.isConfirmed) {
+                    window.location.href = "/tabla";
+                }else{
+                    window.location.href = "/tabla";
+                }
+            })
+        </script>
         @else
-            <p>la fecha debe tener algun error mal cargado.</p>
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "ups algo salio mal!",
+                text: "el formulario debe tener un campo mal cargado, vuelve a intentar.",
+                confirmButtonText: "OK",
+            }).then((response)=>{
+                if (response.isConfirmed) {
+                    window.location.href = "/tabla";
+                }else{
+                    window.location.href = "/tabla";
+                }
+            })
+        </script>
         @endif
     </div>
 </div>
-<script>
-    // Swal.fire({
-    //     icon: "error",
-    //     title: "ups algo salio mal!",
-    //     text: "ah ocurrido un error al cargar el registro, vuelve a intentarlo",
-    //     confirmButtonText: "OK",
-    // }).then((response)=>{
-    //     if (response.isConfirmed) {
-    //         window.location.href = "/registro";
-    //     }else{
-    //         window.location.href = "/registro";
-    //     }
-    // })
-    console.log("hola esta linea se ejecuta del error")
-</script>
+
 @endsection
