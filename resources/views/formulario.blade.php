@@ -3,7 +3,7 @@
 
 @section('contenido')
     <section class="d-flex justify-content-center">
-        <form class="m-4 p-5 rounded-4 text-white bg-primary" method="post" action="/cargar">
+        <form class="m-4 p-5 rounded-4 text-white bg-primary" method="post" action="/cargar" id="formData">
             @csrf
             <b class="text-center fs-4">Crear nueva licencia</b>
             <p>complete los campos para registrar una nueva licencia</p>
@@ -58,7 +58,8 @@
                     <label for="direccion">Direccion: </label>
                     <input type="text" placeholder="Ej: Av corrientes 2400" name="direccion">
                     <label for="OD">Orden del dia: </label>
-                    <input type="text" placeholder="Entre 6 y 10 caracteres" name="ordenDia"
+                    <input type="text" placeholder="Entre 6 y 10 caracteres" name="ordenDia" id="idOrden">
+                    <p class="text-dark">el campo debe ser de entre 6 y 10 caracteres</p>
                 </div>
                 <input type="submit" class="btn btn-danger" value="Enviar" >
             </div>
@@ -66,9 +67,20 @@
     </section>
 
     <script>
+        const inputOrden = document.getElementById('idOrden')
         
+        document.getElementById('formData').addEventListener('submit',(event)=>{
+            event.preventDefault();
+            
 
-
+        })
+        let cadena = inputOrden.value;
+        let longitud = cadena.trim().replace(/\s+/g, "");//elimino los espacios.
+        //verifico la longuitud de la cadena
+        if (longitud >= 6 && longitud <= 10 ) {
+            console.log(longitud);
+        }
+    
     </script>
 
 @endsection
