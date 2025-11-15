@@ -2,32 +2,43 @@
 
 
 @section('contenido')
+    <style>
+        /* Estilos personalizados para asegurar que los mensajes de error se vean bien */
+        .error {
+            color: #b30326ff; /* Color de error (rojo) */
+            font-size: 1rem;
+            display: block; /* Ocupa su propia línea */
+            font-weight: 500;
+        }
+    </style>
     <section class="d-flex justify-content-center">
-        <form class="m-4 p-5 rounded-4 text-white bg-primary" method="post" action="/cargar" id="formData">
+        <form class="m-4 p-5 rounded-4 text-white bg-primary " method="post" action="/cargar" id="formValidacion">
             @csrf
-            <b class="text-center fs-4">Crear nueva licencia</b>
+            <div class="text-center">
+                <b class="fs-4">Crear nueva licencia</b>
+            </div>
             <p>complete los campos para registrar una nueva licencia</p>
             <div class="d-flex gap-3 flex-column">
                 <label for="DNI">Ingrese su DNI:
-                <input type="number" name="dni" placeholder="Ej:12345546" required>
+                <input type="number" name="dni" placeholder="Ej:12345546">
                 </label>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-column">
                         <label for="date_start">Fecha de Inicio: </label>
-                        <input type="date" name="fechaInicio" required>
+                        <input type="date" name="fechaInicio">
                     </div>
                     <div class="d-flex flex-column">
                         <label for="date_start">Fecha de Termino: </label>
-                        <input type="date" name="fechaFin" required>
+                        <input type="date" name="fechaFin">
                     </div>
                 </div>
-                <select name="tipo"  required >
+                <select name="tipo">
                     <option value="">Seleccione el tipo</option>
                     <option value="Licencia Extraordinaria" >Licencia Ordinaria</option>
                     <option value="Licencia Ordinaria">Licencia Extraordinaria</option>
                 </select>
                 <label for="">Provincia:</label>
-                <select name="provincia" required>
+                <select name="provincia">
                     <option value="">Seleccione una provincia</option>
                     <option value="Buenos Aires">Buenos Aires</option>
                     <option value="Entre Rios">Entre Rios</option>
@@ -59,7 +70,6 @@
                     <input type="text" placeholder="Ej: Av corrientes 2400" name="direccion">
                     <label for="OD">Orden del dia: </label>
                     <input type="text" placeholder="Entre 6 y 10 caracteres" name="ordenDia" id="idOrden">
-                    <p class="text-dark">el campo debe ser de entre 6 y 10 caracteres</p>
                 </div>
                 <input type="submit" class="btn btn-danger" value="Enviar" >
             </div>
@@ -67,19 +77,67 @@
     </section>
 
     <script>
-        const inputOrden = document.getElementById('idOrden')
-        
-        document.getElementById('formData').addEventListener('submit',(event)=>{
-            event.preventDefault();
-            
-
+        $(document).ready(function(){
+            $('#formValidacion').validate({
+                rules:{
+                    ordenDia: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 10
+                    },
+                    dni:{
+                        required:true
+                    },
+                    direccion:{
+                        required:true
+                    },
+                    localidad:{
+                        required:true
+                    },
+                    provincia:{
+                        required:true
+                    },
+                    tipo:{
+                        required:true
+                    },
+                    fechaInicio:{
+                        required:true
+                    },
+                    fechaFin:{
+                        required:true
+                    }
+                },
+                messages: {
+                    ordenDia: {
+                        required: "campo incompleto",
+                        minlength: "Tener al menos 6 caracteres.",
+                        maxlength: "No exceder los 10 caracteres."
+                    },
+                    dni: {
+                        required: "El DNI es un campo obligatorio"
+                    },
+                    tipo: {
+                        required: "Debe seleccionar un tipo de licencia"
+                    },
+                    direccion: {
+                        required: "Ingrese la dirección"
+                    },
+                    localidad: {
+                        required: "Especifique la localidad donde reside."
+                    },
+                    provincia: {
+                        required: "Seleccione una provincia"
+                    },
+                    fechaInicio: {
+                        required: "Indique fecha de inicio."
+                    },
+                    fechaFin: {
+                        required: "Indique la fecha finalizacion."
+                    }
+                },
+                errorClass: 'error' //con la clase css le definimos los estilos.
+            })
         })
-        let cadena = inputOrden.value;
-        let longitud = cadena.trim().replace(/\s+/g, "");//elimino los espacios.
-        //verifico la longuitud de la cadena
-        if (longitud >= 6 && longitud <= 10 ) {
-            console.log(longitud);
-        }
     
     </script>
 

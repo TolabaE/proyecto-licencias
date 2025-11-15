@@ -29,9 +29,9 @@
                 confirmButtonText: "OK",
             }).then((response)=>{
                 if (response.isConfirmed) {
-                    window.location.href = "/tabla";
+                    window.location.href = "/registro";
                 }else{
-                    window.location.href = "/tabla";
+                    window.location.href = "/registro";
                 }
             })
         </script>

@@ -21,9 +21,12 @@
             <a href="/tabla" class="nav-link p-2">Ver licencias</a>
         </button>
     </div>
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <section>
         @yield('contenido')
     </section>
-
+    <!-- agregado del paquete jquery validation por cdn para validar campos en el formulario -->
 </body>
 </html>
