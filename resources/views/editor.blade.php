@@ -2,7 +2,7 @@
 
 @section('contenido')
     <section class="d-flex justify-content-center">
-        <form class="m-4 p-5 rounded-4 text-white bg-primary" method="post" action="{{ route('update', ['id' => $licencia['id']]) }}">
+        <form class="m-4 p-5 rounded-4 text-white bg-primary" method="post" action="/update" id="formEdith">
             @csrf
             <div class="text-center">
                 <b class="text-center fs-4">Modificar la licencia</b>
@@ -28,6 +28,7 @@
                             echo htmlspecialchars($fechaFormateada); ?>">
                     </div>
                 </div>
+                <!-- envio en un input oculto el valor del id -->
                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($licencia['id']); ?>">
                 <select name="tipo"  required >
                     <option value="">Seleccione el tipo</option>
@@ -97,5 +98,27 @@
             </div>
         </form>
     </section>
+    <script>
+        //para leer codigo jquery
+        $(document).ready(function(){
+            $("#formEdith").validate({
+                rules:{
+                    ordenDia: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 10
+                    },
+                },
+                messages:{
+                    ordenDia: {
+                        required: "campo incompleto",
+                        minlength: "Tener al menos 6 caracteres.",
+                        maxlength: "No exceder los 10 caracteres."
+                    },
+                },
+                errorClass: 'error' //con la clase css le definimos los estilos.
+            });
+        });
+    </script>
 
 @endsection

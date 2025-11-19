@@ -8,6 +8,15 @@
     <title>Administrador Licencias</title>
 </head>
 <body class="bg-white">
+    <style>
+        /* Estilos personalizados para asegurar que los mensajes de error se vean bien */
+        .error {
+            color: #b30326ff; /* Color de error (rojo) */
+            font-size: 1rem;
+            display: block; /* Ocupa su propia línea */
+            font-weight: 500;
+        }
+    </style>
     <nav class="d-flex align-items-center justify-content-between p-3 bg-primary">
         <div class="d-flex">
             <a href="/" class="nav-link text-white p-2 fs-4">Administrador Licencias "Ejercito Militar"</a>
@@ -21,12 +30,12 @@
             <a href="/tabla" class="nav-link p-2">Ver licencias</a>
         </button>
     </div>
+    <!-- agregado del paquete jquery validation por cdn para validar campos en el formulario -->
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <section>
         @yield('contenido')
     </section>
-    <!-- agregado del paquete jquery validation por cdn para validar campos en el formulario -->
 </body>
 </html>
