@@ -10,19 +10,19 @@
             <p>complete los campos que desea actualizar</p>
             <div class="d-flex gap-3 flex-column">
                 <label for="DNI">Ingrese su DNI:
-                <input type="number" name="dni" placeholder="Ej:12345546" required value="<?php echo htmlspecialchars($licencia['dni']); ?>">
+                <input type="number" name="dni" placeholder="Ej:12345546" value="<?php echo htmlspecialchars($licencia['dni']); ?>">
                 </label>
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-column">
                         <label for="date_start">Fecha de Inicio: </label>
-                        <input type="date" name="fechaInicio" required value="<?php
+                        <input type="date" name="fechaInicio" value="<?php
                             $fecha = $licencia['fechaInicio'];
                             $fechaFormateada = substr($fecha,0,10);
                             echo htmlspecialchars($fechaFormateada); ?>">
                     </div>
                     <div class="d-flex flex-column">
                         <label for="date_start">Fecha de Termino: </label>
-                        <input type="date" name="fechaFin" required value="<?php
+                        <input type="date" name="fechaFin" value="<?php
                             $fecha = $licencia['fechaFin'];
                             $fechaFormateada = substr($fecha,0,10);//corta los primeros 9 numeros de la cadena => 2024-04-26T00:00:00.000Z
                             echo htmlspecialchars($fechaFormateada); ?>">
@@ -30,7 +30,7 @@
                 </div>
                 <!-- envio en un input oculto el valor del id -->
                 <input type="hidden" name="id" value="<?php echo htmlspecialchars($licencia['id']); ?>">
-                <select name="tipo"  required >
+                <select name="tipo">
                     <option value="">Seleccione el tipo</option>
                     <option value="Licencia Ordinaria"
                         <?php if ($licencia['tipo'] == 'Licencia Ordinaria') {echo 'selected';} ?> >Licencia Ordinaria</option>
@@ -38,7 +38,7 @@
                         <?php if ($licencia['tipo'] == 'Licencia Extraordinaria'){ echo 'selected';} ?> >Licencia Extraordinaria</option>
                 </select>
                 <label for="">Provincia:</label>
-                <select name="provincia" required>
+                <select name="provincia" >
                     <label for="provincia">País:</label>
                     <option value="">Seleccione una provincia</option>
                     <option value="Buenos Aires"
@@ -101,23 +101,65 @@
     <script>
         //para leer codigo jquery
         $(document).ready(function(){
-            $("#formEdith").validate({
+            $('#formEdith').validate({
                 rules:{
                     ordenDia: {
                         required: true,
                         minlength: 6,
                         maxlength: 10
                     },
+                    dni:{
+                        required:true
+                    },
+                    direccion:{
+                        required:true
+                    },
+                    localidad:{
+                        required:true
+                    },
+                    provincia:{
+                        required:true
+                    },
+                    tipo:{
+                        required:true
+                    },
+                    fechaInicio:{
+                        required:true
+                    },
+                    fechaFin:{
+                        required:true
+                    }
                 },
-                messages:{
+                messages: {
                     ordenDia: {
                         required: "campo incompleto",
                         minlength: "Tener al menos 6 caracteres.",
                         maxlength: "No exceder los 10 caracteres."
                     },
+                    dni: {
+                        required: "El DNI es un campo obligatorio"
+                    },
+                    tipo: {
+                        required: "Debe seleccionar un tipo de licencia"
+                    },
+                    direccion: {
+                        required: "Ingrese la dirección"
+                    },
+                    localidad: {
+                        required: "Especifique la localidad donde reside."
+                    },
+                    provincia: {
+                        required: "Seleccione una provincia"
+                    },
+                    fechaInicio: {
+                        required: "Indique fecha de inicio."
+                    },
+                    fechaFin: {
+                        required: "Indique la fecha finalizacion."
+                    }
                 },
                 errorClass: 'error' //con la clase css le definimos los estilos.
-            });
+            })
         });
     </script>
 

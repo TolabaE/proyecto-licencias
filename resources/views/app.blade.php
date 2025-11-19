@@ -36,6 +36,34 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <section>
         @yield('contenido')
+
     </section>
+    <script>
+        //creo la funcion loading
+        function cargarLoading (){
+            let timerInterval;
+            Swal.fire({
+                title: "Cargando licencias...",
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                    timerInterval = setInterval(100);
+                },
+                willClose: () => {
+                    clearInterval(timerInterval);
+                }
+            }).then((result) => {
+            //creo un loading que una vez en la pagina principal me redirecione a las tablas.
+            if (result.dismiss === Swal.DismissReason.timer) {
+                window.location.href = "/tabla";//redirecciona a la vista tabla.
+            }
+            });
+        }
+
+        if (window.location.pathname === "/") {
+            cargarLoading()
+        }
+    </script>
 </body>
 </html>
