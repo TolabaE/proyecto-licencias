@@ -86,7 +86,9 @@
                         maxlength: 10
                     },
                     dni:{
-                        required:true
+                        required:true,
+                        minlength: 8,
+                        maxlength: 9
                     },
                     direccion:{
                         required:true
@@ -114,7 +116,10 @@
                         maxlength: "No exceder los 10 caracteres."
                     },
                     dni: {
-                        required: "El DNI es un campo obligatorio"
+                        required: "El DNI es un campo obligatorio",
+                        //agregamos validacion del dni, en el servidor solo recibe esa longitud
+                        minlength: "DNI debe tener al menos 8 caracteres.",
+                        maxlength: "No exceder los 9 caracteres."
                     },
                     tipo: {
                         required: "Debe seleccionar un tipo de licencia"
