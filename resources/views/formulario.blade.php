@@ -12,7 +12,7 @@
         }
     </style>
     <section class="d-flex justify-content-center">
-        <form class="m-4 p-5 rounded-4 text-white bg-primary " method="post" action="/cargar" id="formValidacion">
+        <form class="m-4 p-5 rounded-4 text-white bg-primary" id="formulario">
             @csrf
             <div class="text-center">
                 <b class="fs-4">Crear nueva licencia</b>
@@ -78,7 +78,8 @@
 
     <script>
         $(document).ready(function(){
-            $('#formValidacion').validate({
+            //logica de validacion para que no me envien campos incompletos usando j query validation.
+            const validacion = $('#formulario').validate({
                 rules:{
                     ordenDia: {
                         required: true,
@@ -142,8 +143,40 @@
                 },
                 errorClass: 'error' //con la clase css le definimos los estilos.
             })
+            
+            $("#formulario").on('submit',(event)=>{
+                event.preventDefault()//detengo las acciones del navegador al disparar un evento.
+                //llamo para validar los campos incompletos.
+                if(validacion.form() == true){
+                    const data = new FormData(event.target);
+                    //envio los datos usando ajax
+                    $.post('http://localhost:5800/cargar',data,function(data,status){
+                        console.log(status)
+                    })
+                }
+            })
+            
         })
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     </script>
 
     <!-- mensaje de alerta al registrar una nueva licencia -->
