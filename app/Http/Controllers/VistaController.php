@@ -17,7 +17,7 @@ class VistaController extends Controller
     }
 
     public function formVista (){
-        return view('formulario');
+        return view('formulario',['status'=>"200"]);
     }
 }
 

@@ -8,35 +8,37 @@ class TablaController extends Controller
 {
     public $urlApi = 'http://localhost:5800/';
 
+    public function todasLicencias($statusExtra = []){
+        //hago un llamado al servidor para traer todos los valores y mostrarlo en la vista.
+        $response = Http::get($this->urlApi);
+        $datos = $response->json();//parseo los datos que vienen en json
+        $registros = $datos['licencias'];//accedo al arreglo de registro
+        return view('tabla',[
+            'registro' => $registros,
+            'status' => $statusExtra['status'] ?? 'tabla' //le paso el estado tabla o sino el valor que reciba por parametro
+        ]);
+    }
+
     //metodo para eliminar una licencia por id
     public function eliminarLicencia($id){
         //indico la api con el id de la licencia a eliminar
         $response = Http::delete($this->urlApi."delete/$id");
         $resultado = $response->json();
-        $status = "eliminar";
         if (isset($resultado['status']) && $resultado['status'] == 200){
-                //si la respuesta es exitosa, retorna la vista con el mensaje exitoso.
-                return view('alert',compact('status'));
+                //si la respuesta es exitosa, retorna el metodo todasLicencias y le paso el status de la licencia elimina.
+                return $this->todasLicencias(['status'=>"eliminar"]);
             }else{
                 //caso contrario que me muestre el error en la vista.
                 return view('error',[ 'response' => $resultado]);
             }
     }
 
-    public function todasLicencias(){
-        //hago un llamado al servidor para traer todos los valores y mostrarlo en la vista.
-        $response = Http::get($this->urlApi);
-        $datos = $response->json();//parseo los datos que vienen en json
-        $registros = $datos['licencias'];//accedo al arreglo de registro
-        return view('tabla',['registro' => $registros]);
-    }
-
+    //metodo para buscar una licencia por id y mostrar sus valores en el formulario.
     public function buscarLicencia($id){
         //llamamos a la api para traer todas las licencias.
         $response = Http::get($this->urlApi);
         $resultado = $response->json();
         $licencias = $resultado['licencias'];
-
         $licencia_encontrada = null;
         //buscamos por id la licenciar y obtener sus valores.
         foreach ($licencias as $usuario) {
@@ -46,5 +48,21 @@ class TablaController extends Controller
             }
         }
         return view('editor',['licencia' => $licencia_encontrada]);
+    }
+
+    //metodo que recibe los valores y actualiza una licencia
+    public function actualizarLicencia(Request $request){
+        try {
+            $licenciaActualizada = $request->all();//obtengo los valores del formulario.
+            $response = Http::post($this->urlApi.'update/', $licenciaActualizada);
+            $resultado = $response->json();
+            if (isset($resultado['status']) && $resultado['status'] == 200){
+                return $this->todasLicencias(['status'=>"actualizar"]);
+            }else{
+                return view('error',[ 'response' => $resultado]);
+            }
+        } catch (\Throwable $th) {
+            return back()->withErrors(['conexion' => 'No se pudo conectar con el servidor externo.']);
+        }
     }
 }

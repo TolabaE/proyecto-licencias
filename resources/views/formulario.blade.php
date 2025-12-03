@@ -143,7 +143,19 @@
                 errorClass: 'error' //con la clase css le definimos los estilos.
             })
         })
-    
+
     </script>
+
+    <!-- mensaje de alerta al registrar una nueva licencia -->
+    @if($status == "crear")
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "Nueva Licencia Cargada",
+                text: "¡Proceso realizado exitosamente!",
+                confirmButtonText: "OK",
+            })
+        </script>
+    @endif
 
 @endsection

@@ -21,27 +21,11 @@ class FormController extends Controller
             $resultado = $response->json();
             $status = "crear";// es un variable para manejar los estados de alerta en el frontend
             if (isset($resultado['status']) && $resultado['status'] == 200){
-                return view('alert',compact('status'));
+                return view('formulario',compact('status'));
             }else{
                 return view('error',[ 'response' => $resultado]);
             }
 
-        } catch (\Throwable $th) {
-            return back()->withErrors(['conexion' => 'No se pudo conectar con el servidor externo.']);
-        }
-    }
-
-    public function actualizarLicencia(Request $request){
-        try {
-            $licenciaActualizada = $request->all();//obtengo los valores del formulario.
-            $response = Http::post($this->apiUrl.'update/', $licenciaActualizada);
-            $resultado = $response->json();
-            $status = "actualizar";
-            if (isset($resultado['status']) && $resultado['status'] == 200){
-                return view('alert',compact('status'));
-            }else{
-                return view('error',[ 'response' => $resultado]);
-            }
         } catch (\Throwable $th) {
             return back()->withErrors(['conexion' => 'No se pudo conectar con el servidor externo.']);
         }

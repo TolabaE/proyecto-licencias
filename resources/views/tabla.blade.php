@@ -27,23 +27,43 @@
                         <td> {{ $usuario['provincia'] }} </td>
                         <td> {{ $usuario['ordenDia'] }} </td>
                         <td class="d-flex gap-4">
-                            <form action="{{ route('actualizar',[ 'id'=> $usuario['id'] ]) }}" method="post">
-                                @csrf
-                                @method('PUT')
-                                <input class="btn btn-success" type="submit" value="Modificar"></input>
-                            </form>
-                            <!-- paso la ruta y el id al controlador donde voy a hacer el llamado a la api -->
-                            <form action="{{ route('eliminar', ['id' => $usuario['id']]) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" class="btn btn-danger" value="Eliminar"></input>
-                            </form>
+                            <!-- llamo al controlador para actualizar una licencia pasando el id -->
+                            <button class="btn btn-success"><a href="{{ route('actualizar',[ 'id'=> $usuario['id'] ]) }}" class="nav-link" >Modificar</a></button>
+                            <!-- llamo al controlador para eliminar una licencia referenciando por id -->
+                            <button class="btn btn-danger"><a href="{{ route('eliminar', ['id' => $usuario['id']]) }}" class="nav-link">Eliminar</a></button>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        <script>
-        </script>
     </section>
+
+    <!-- aqui manejo las respuestas que me envian los controladores -->
+    
+    <!-- este alerta es cuando la licencia fue eliminada exitosamente -->
+    @if($status == 'eliminar')
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "Licencia eliminada",
+                text: "¡La licencia fue eliminada exitosamente!",
+                confirmButtonText: "OK",
+            })
+        </script>
+    @elseif($status == "actualizar")
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Licencia actualizada",
+            text: "¡Proceso realizado exitosamente!",
+            confirmButtonText: "OK",
+        }).then((response)=>{
+            if (response.isConfirmed) {
+                window.location.href = "/tabla";
+            }else{
+                window.location.href = "/tabla";
+            }
+        })
+    </script>
+    @endif
 @endsection
