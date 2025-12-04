@@ -12,9 +12,9 @@ Route::get('/registro',[VistaController::class,'formVista']);
 Route::get('/tabla',[TablaController::class,'todasLicencias']);
 
 // ruta de todos los metodos en la tabla
-Route::get('/buscar/{id}',[TablaController::class,'buscarLicencia'])->name('actualizar');
+Route::get('/buscar/{id}',[TablaController::class,'buscarLicencia'])->name('buscar');
 Route::get('/delete/{id}',[TablaController::class,'eliminarLicencia'])->name('eliminar');
-Route::post('/update',[TablaController::class,'actualizarLicencia'])->name('update');
 
 // ruta para enviar valores al servidor
-Route::post('/cargar',[FormController::class,'cargarLicencia']);
+Route::post('/update',[FormController::class,'actualizarLicencia'])->name('actualizar');
+Route::post('/cargar',[FormController::class,'cargarLicencia'])->name('guardar');

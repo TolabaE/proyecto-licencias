@@ -2,7 +2,7 @@
 
 @section('contenido')
     <section class="d-flex justify-content-center">
-        <form class="m-4 p-5 rounded-4 text-white bg-primary" method="post" action="/update" id="formEdith">
+        <form class="m-4 p-5 rounded-4 text-white bg-primary" method="post" id="formEditar">
             @csrf
             <div class="text-center">
                 <b class="text-center fs-4">Modificar la licencia</b>
@@ -98,69 +98,109 @@
             </div>
         </form>
     </section>
-    <script>
-        //para leer codigo jquery
-        $(document).ready(function(){
-            $('#formEdith').validate({
-                rules:{
-                    ordenDia: {
-                        required: true,
-                        minlength: 6,
-                        maxlength: 10
-                    },
-                    dni:{
-                        required:true
-                    },
-                    direccion:{
-                        required:true
-                    },
-                    localidad:{
-                        required:true
-                    },
-                    provincia:{
-                        required:true
-                    },
-                    tipo:{
-                        required:true
-                    },
-                    fechaInicio:{
-                        required:true
-                    },
-                    fechaFin:{
-                        required:true
-                    }
-                },
-                messages: {
-                    ordenDia: {
-                        required: "campo incompleto",
-                        minlength: "Tener al menos 6 caracteres.",
-                        maxlength: "No exceder los 10 caracteres."
-                    },
-                    dni: {
-                        required: "El DNI es un campo obligatorio"
-                    },
-                    tipo: {
-                        required: "Debe seleccionar un tipo de licencia"
-                    },
-                    direccion: {
-                        required: "Ingrese la dirección"
-                    },
-                    localidad: {
-                        required: "Especifique la localidad donde reside."
-                    },
-                    provincia: {
-                        required: "Seleccione una provincia"
-                    },
-                    fechaInicio: {
-                        required: "Indique fecha de inicio."
-                    },
-                    fechaFin: {
-                        required: "Indique la fecha finalizacion."
-                    }
-                },
-                errorClass: 'error' //con la clase css le definimos los estilos.
-            })
-        });
-    </script>
 
+    <script>
+
+    const rutaController = "{{ route('actualizar') }}";
+    
+    //para leer codigo jquery
+    $(document).ready(function(){
+        const validacion = $('#formEditar').validate({
+            rules:{
+                ordenDia: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 10
+                },
+                dni:{
+                    required:true
+                },
+                direccion:{
+                    required:true
+                },
+                localidad:{
+                    required:true
+                },
+                provincia:{
+                    required:true
+                },
+                tipo:{
+                    required:true
+                },
+                fechaInicio:{
+                    required:true
+                },
+                fechaFin:{
+                    required:true
+                }
+            },
+            messages: {
+                ordenDia: {
+                    required: "campo incompleto",
+                    minlength: "Tener al menos 6 caracteres.",
+                    maxlength: "No exceder los 10 caracteres."
+                },
+                dni: {
+                    required: "El DNI es un campo obligatorio"
+                },
+                tipo: {
+                    required: "Debe seleccionar un tipo de licencia"
+                },
+                direccion: {
+                    required: "Ingrese la dirección"
+                },
+                localidad: {
+                    required: "Especifique la localidad donde reside."
+                },
+                provincia: {
+                    required: "Seleccione una provincia"
+                },
+                fechaInicio: {
+                    required: "Indique fecha de inicio."
+                },
+                fechaFin: {
+                    required: "Indique la fecha finalizacion."
+                }
+            },
+            errorClass: 'error' //con la clase css le definimos los estilos.
+        })
+
+        $('#formEditar').on('submit',function(event){
+            event.preventDefault();
+            //el metodo validacion.form() retorna un booleano true si la validaciones son correctas.
+            if(validacion.form() == true){
+                let dataEditor = $(this).serialize();
+                $.ajax({
+                    url:rutaController,
+                    data:dataEditor,
+                    type:"POST",
+                    success:function(res){
+                        Swal.fire({
+                            icon: "success",
+                            title: "Licencia actualizada",
+                            text: "¡Proceso realizado exitosamente!",
+                            confirmButtonText: "OK",
+                        }).then((response)=>{
+                            //una vez cargada la licencia correctamente me retorne a la vista de las tablas
+                            if (response.isConfirmed) {
+                                window.location.href = "/tabla";
+                            }else{
+                                window.location.href = "/tabla";
+                            }
+                        })
+                    },
+                    error:(status,error)=>{
+                        Swal.fire({
+                            icon: "error",
+                            title: "valores incompletos",
+                            text: "el formulario debe tener un campo mal cargado, vuelve a intentar.",
+                            confirmButtonText: "OK",
+                        })
+                        console.log(error)
+                    }
+                })
+            }
+        })
+    });
+    </script>
 @endsection

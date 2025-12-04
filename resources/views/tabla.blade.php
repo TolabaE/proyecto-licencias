@@ -27,8 +27,8 @@
                         <td> {{ $usuario['provincia'] }} </td>
                         <td> {{ $usuario['ordenDia'] }} </td>
                         <td class="d-flex gap-4">
-                            <!-- llamo al controlador para actualizar una licencia pasando el id -->
-                            <button class="btn btn-success"><a href="{{ route('actualizar',[ 'id'=> $usuario['id'] ]) }}" class="nav-link" >Modificar</a></button>
+                            <!-- llamo al controlador para actualizar una licencia pasando el id, primero lo vamos a buscar para pintarlo en el formulario-->
+                            <button class="btn btn-success"><a href="{{ route('buscar',[ 'id'=> $usuario['id'] ]) }}" class="nav-link" >Modificar</a></button>
                             <!-- llamo al controlador para eliminar una licencia referenciando por id -->
                             <button class="btn btn-danger"><a href="{{ route('eliminar', ['id' => $usuario['id']]) }}" class="nav-link">Eliminar</a></button>
                         </td>
@@ -48,22 +48,20 @@
                 title: "Licencia eliminada",
                 text: "¡La licencia fue eliminada exitosamente!",
                 confirmButtonText: "OK",
+            }).then(()=>{
+                window.location.href = "/tabla";//esto es para que refreque la pagina y se limpie la url
             })
         </script>
-    @elseif($status == "actualizar")
+        <!-- si el usuario no se pudo eliminar lanzara este -->
+    @elseif($status == "error")
     <script>
         Swal.fire({
-            icon: "success",
-            title: "Licencia actualizada",
-            text: "¡Proceso realizado exitosamente!",
-            confirmButtonText: "OK",
-        }).then((response)=>{
-            if (response.isConfirmed) {
-                window.location.href = "/tabla";
-            }else{
-                window.location.href = "/tabla";
-            }
-        })
+                icon: "error",
+                title: "ups algo salio mal!",
+                text: "No se pudo eliminar la licencia",
+                confirmButtonText: "OK",
+            })
     </script>
     @endif
+
 @endsection

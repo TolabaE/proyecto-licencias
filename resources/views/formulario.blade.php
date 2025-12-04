@@ -2,17 +2,9 @@
 
 
 @section('contenido')
-    <style>
-        /* Estilos personalizados para asegurar que los mensajes de error se vean bien */
-        .error {
-            color: #b30326ff; /* Color de error (rojo) */
-            font-size: 1rem;
-            display: block; /* Ocupa su propia línea */
-            font-weight: 500;
-        }
-    </style>
+
     <section class="d-flex justify-content-center">
-        <form class="m-4 p-5 rounded-4 text-white bg-primary" id="formulario">
+        <form class="m-4 p-5 rounded-4 text-white bg-primary" id="formulario" method="POST">
             @csrf
             <div class="text-center">
                 <b class="fs-4">Crear nueva licencia</b>
@@ -77,6 +69,7 @@
     </section>
 
     <script>
+
         $(document).ready(function(){
             //logica de validacion para que no me envien campos incompletos usando j query validation.
             const validacion = $('#formulario').validate({
@@ -144,51 +137,42 @@
                 errorClass: 'error' //con la clase css le definimos los estilos.
             })
             
-            $("#formulario").on('submit',(event)=>{
+            const url = "{{ route('guardar')}}";
+
+            //creo el evento del formulario usando jquery.
+            $("#formulario").on('submit',function(event){
                 event.preventDefault()//detengo las acciones del navegador al disparar un evento.
                 //llamo para validar los campos incompletos.
                 if(validacion.form() == true){
-                    const data = new FormData(event.target);
+                    let formData = $(this).serialize();//obtengo todos los valores de formulario.
                     //envio los datos usando ajax
-                    $.post('http://localhost:5800/cargar',data,function(data,status){
-                        console.log(status)
+                    $.ajax({
+                        type:"POST",
+                        url:url,
+                        data:formData,
+                        success:(res)=>{
+                            //si la respuesta es exitosa envio un alerta
+                            Swal.fire({
+                                icon: "success",
+                                title: "Nueva Licencia Cargada",
+                                text: "¡Proceso realizado exitosamente!",
+                                confirmButtonText: "OK",
+                            })
+                            $('#formulario').trigger('reset');//limpio los campos del formulario
+                            validacion.resetForm();//Limpia los mensajes y el estado de las validaciones
+                        },
+                        error:(status,error)=>{
+                            Swal.fire({
+                                icon: "error",
+                                title: "valores incompletos",
+                                text: "el formulario debe tener un campo mal cargado, vuelve a intentar.",
+                                confirmButtonText: "OK",
+                            })
+                            console.log(error)
+                        }
                     })
                 }
             })
-            
         })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     </script>
-
-    <!-- mensaje de alerta al registrar una nueva licencia -->
-    @if($status == "crear")
-        <script>
-            Swal.fire({
-                icon: "success",
-                title: "Nueva Licencia Cargada",
-                text: "¡Proceso realizado exitosamente!",
-                confirmButtonText: "OK",
-            })
-        </script>
-    @endif
-
 @endsection

@@ -28,8 +28,8 @@ class TablaController extends Controller
                 //si la respuesta es exitosa, retorna el metodo todasLicencias y le paso el status de la licencia elimina.
                 return $this->todasLicencias(['status'=>"eliminar"]);
             }else{
-                //caso contrario que me muestre el error en la vista.
-                return view('error',[ 'response' => $resultado]);
+                //caso contrario que me muestre el error en la vista tabla
+                return $this->todasLicencias(['status'=>"error"]);
             }
     }
 
@@ -48,21 +48,5 @@ class TablaController extends Controller
             }
         }
         return view('editor',['licencia' => $licencia_encontrada]);
-    }
-
-    //metodo que recibe los valores y actualiza una licencia
-    public function actualizarLicencia(Request $request){
-        try {
-            $licenciaActualizada = $request->all();//obtengo los valores del formulario.
-            $response = Http::post($this->urlApi.'update/', $licenciaActualizada);
-            $resultado = $response->json();
-            if (isset($resultado['status']) && $resultado['status'] == 200){
-                return $this->todasLicencias(['status'=>"actualizar"]);
-            }else{
-                return view('error',[ 'response' => $resultado]);
-            }
-        } catch (\Throwable $th) {
-            return back()->withErrors(['conexion' => 'No se pudo conectar con el servidor externo.']);
-        }
     }
 }
