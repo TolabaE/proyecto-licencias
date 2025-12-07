@@ -10,6 +10,7 @@ Route::get('/', [VistaController::class,'appVista']);
 Route::get('/editar',[VistaController::class,'editarVista']);
 Route::get('/registro',[VistaController::class,'formVista']);
 Route::get('/tabla',[TablaController::class,'todasLicencias']);
+Route::get('/jtable',[VistaController::class,'vistaJtabla']);
 
 // ruta de todos los metodos en la tabla
 Route::get('/buscar/{id}',[TablaController::class,'buscarLicencia'])->name('buscar');

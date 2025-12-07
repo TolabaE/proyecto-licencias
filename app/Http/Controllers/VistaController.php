@@ -19,5 +19,9 @@ class VistaController extends Controller
     public function formVista (){
         return view('formulario',['status'=>"200"]);
     }
+
+    public function vistaJtabla(){
+        return view('jtable');
+    }
 }
 

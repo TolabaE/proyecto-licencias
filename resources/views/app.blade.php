@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <!-- todas las dependencias para instalar jtable -->
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="/node_modules/jquery-ui/dist/themes/base/jquery-ui.min.css">
+
+    <script src="/node_modules/jquery-ui/dist/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="/node_modules/jtable/lib/themes/metro/blue/jtable.min.css">
+    <script src="/node_modules/jtable/jquery.jtable.js"></script>
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <title>Administrador Licencias</title>
 </head>
