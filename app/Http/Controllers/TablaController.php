@@ -49,4 +49,12 @@ class TablaController extends Controller
         }
         return view('editor',['licencia' => $licencia_encontrada]);
     }
+
+    // creo un nuevo metodo para usarlo en jtable.
+    public function traerRegistroJtable(){
+        $response = Http::get($this->urlApi);
+        $datos = $response->json();//parseo los datos que vienen en json
+        $licencias = $datos['licencias'];
+        return response()->json(['status'=>200,'result'=>$licencias]);
+    }
 }

@@ -3,36 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-    <!-- todas las dependencias para instalar jtable -->
-    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-    <link rel="stylesheet" href="/node_modules/jquery-ui/dist/themes/base/jquery-ui.min.css">
-
-    <script src="/node_modules/jquery-ui/dist/jquery-ui.min.js"></script>
-
-    <link rel="stylesheet" href="/node_modules/jtable/lib/themes/metro/blue/jtable.min.css">
-    <script src="/node_modules/jtable/jquery.jtable.js"></script>
-
+    <!-- importo la dependecia base de jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+        crossorigin="anonymous">
+    </script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <title>Administrador Licencias</title>
-</head>
-<body class="bg-white">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- todas las dependencias para instalar jtable -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <style>
-        /* Estilos personalizados para asegurar que los mensajes de error se vean bien */
         .error {
             color: #b30326ff; /* Color de error (rojo) */
             font-size: 1rem;
             display: block; /* Ocupa su propia línea */
             font-weight: 500;
         }
-    </style>
+        </style>
+    <title>Administrador Licencias</title>
+</head>
+<body class="bg-white">
     <nav class="d-flex align-items-center justify-content-between p-3 bg-primary">
         <div class="d-flex">
             <a href="/" class="nav-link text-white p-2 fs-4">Administrador Licencias "Ejercito Militar"</a>
         </div>
     </nav>
+    <p><a href="/jtable" class="nav-link">ver licencias en jtable</a></p>
     <div class="d-flex justify-content-end">
         <button class="btn btn-primary m-4">
             <a href="/registro" class="nav-link p-2">Crear Licencia</a>
@@ -41,13 +40,9 @@
             <a href="/tabla" class="nav-link p-2">Ver licencias</a>
         </button>
     </div>
-    <!-- agregado del paquete jquery validation por cdn para validar campos en el formulario -->
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <section>
         @yield('contenido')
-
+        
     </section>
     <script>
         //creo la funcion loading
@@ -65,16 +60,18 @@
                     clearInterval(timerInterval);
                 }
             }).then((result) => {
-            //creo un loading que una vez en la pagina principal me redirecione a las tablas.
-            if (result.dismiss === Swal.DismissReason.timer) {
-                window.location.href = "/tabla";//redirecciona a la vista tabla.
-            }
+                //creo un loading que una vez en la pagina principal me redirecione a las tablas.
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    window.location.href = "/tabla";//redirecciona a la vista tabla.
+                }
             });
         }
-
+        
         if (window.location.pathname === "/") {
             cargarLoading()
         }
-    </script>
+        </script>
+
+    
 </body>
 </html>

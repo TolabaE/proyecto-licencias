@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TablaController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\JtableController;
 use App\Http\Controllers\VistaController;
 
 // ruta de todas las vistas
@@ -11,6 +12,9 @@ Route::get('/editar',[VistaController::class,'editarVista']);
 Route::get('/registro',[VistaController::class,'formVista']);
 Route::get('/tabla',[TablaController::class,'todasLicencias']);
 Route::get('/jtable',[VistaController::class,'vistaJtabla']);
+
+//aqui estan todas las rutas para usar en la vista jtable
+Route::get('/licencias',[JtableController::class,'traerRegistroJtable'])->name('licencias');
 
 // ruta de todos los metodos en la tabla
 Route::get('/buscar/{id}',[TablaController::class,'buscarLicencia'])->name('buscar');

@@ -8,7 +8,8 @@
 
 <script>
     $(document).ready(function(){
-
+        const urlController = "{{ route('licencias')}}"
+        
         $("#tablaLicencia").jtable({
             title:"Registro Licencia",
             actions:{
@@ -16,25 +17,63 @@
                     return $.Deferred(function($dfd){
                         $.ajax({
                             type:"GET",
-                            url:"http://localhost:5800/",
-                            async:true,
+                            url:urlController,
                             dataType:"json",
                             success:function(response){
-                                console.log(response);
-                                $dfd.resolve(response)
+                                let jtableResponse = {
+                                'Result': 'OK', // Debe ser 'OK' para mostrar los datos
+                                // Asumiendo que en response.result estan las listas de licencias cargadas.
+                                'Records': response.result,
+                                'TotalRecordCount':response.result.length
+                            };
+                                $dfd.resolve(jtableResponse)
                             },
                             error:function(error){
                                 console.log(error);
                             }
                         })
                     })
-                }
+                },
+                createAction:"",
+                updateAction:"",
+                deleteAction:"",
+
             },
-            field:{
+            fields:{
                 dni:{
                     title:"DNI",
-                    display:function(response){
-                        return response.record.dni
+                    display:function(res){
+                        return res.record.dni
+                    }
+                },
+                fechaInicio:{
+                    title:"Fecha inicio",
+                    display:function(res){
+                        return res.record.fechaInicio
+                    }
+                },
+                fechaFin:{
+                    title:"Fecha Fin",
+                    display:function(res){
+                        return res.record.fechaInicio
+                    }
+                },
+                tipo:{
+                    title:"Tipo",
+                    display:function(res){
+                        return res.record.tipo
+                    }
+                },
+                provincia:{
+                    title:"Provincia",
+                    display:function(res){
+                        return res.record.provincia
+                    }
+                },
+                ordenDia:{
+                    title:"Orden (OD)",
+                    display:function(res){
+                        return res.record.ordenDia
                     }
                 }
             }

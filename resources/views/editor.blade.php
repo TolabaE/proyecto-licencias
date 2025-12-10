@@ -113,7 +113,9 @@
                     maxlength: 10
                 },
                 dni:{
-                    required:true
+                    required:true,
+                    minlength: 6,
+                    maxlength: 10
                 },
                 direccion:{
                     required:true
