@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Log;
 
 class FormController extends Controller
 {
@@ -18,7 +18,6 @@ class FormController extends Controller
             // $datos_registro = $request->all(); //trae todos los valores incluyendo el token.
             
             $datos_registro = $request->except('_token');//me trae todos los datos, menos el token.
-            
             //envio los datos al sevidor
             $response = Http::post($this->apiUrl."insert", $datos_registro);
             $resultado = $response->json();
@@ -39,8 +38,9 @@ class FormController extends Controller
         try {
             $licenciaActualizada = $request->except('_token');//obtengo los valores del formulario.
             //envio los datos al servidor.
-            $response = Http::post($this->apiUrl.'update/', $licenciaActualizada);
+            $response = Http::post($this->apiUrl.'update', $licenciaActualizada);
             $resultado = $response->json();
+
             if (isset($resultado['status']) && $resultado['status'] == 200){
                 return response()->json(['status'=>200,'msg'=>"success"]);
             }else{

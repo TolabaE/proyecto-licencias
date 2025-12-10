@@ -2,6 +2,16 @@
 @extends('app')
 
 @section('contenido')
+
+    <p><a href="/jtable" class=" p-2">ver licencias en jtable</a></p>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary m-4">
+            <a href="/registro" class="nav-link p-2">Crear Licencia</a>
+        </button>
+        <button class="btn btn-success m-4">
+            <a href="/tabla" class="nav-link p-2">Ver licencias</a>
+        </button>
+    </div>
     <h2 class="text-center">Todos los registros de licencias</h2>
     <section class="p-4">
         <table class="table rounded-2 table-hover">

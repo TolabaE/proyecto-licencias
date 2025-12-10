@@ -3,6 +3,14 @@
 
 @section('contenido')
 
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary m-4">
+            <a href="/registro" class="nav-link p-2">Crear Licencia</a>
+        </button>
+        <button class="btn btn-success m-4">
+            <a href="/tabla" class="nav-link p-2">Ver licencias</a>
+        </button>
+    </div>
     <section class="d-flex justify-content-center">
         <form class="m-4 p-5 rounded-4 text-white bg-primary" id="formulario" method="POST">
             @csrf

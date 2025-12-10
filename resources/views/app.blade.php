@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- importo la dependecia base de jquery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" 
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
         crossorigin="anonymous">
     </script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -17,9 +17,9 @@
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <style>
         .error {
-            color: #b30326ff; /* Color de error (rojo) */
+            color: #b30326ff;
             font-size: 1rem;
-            display: block; /* Ocupa su propia línea */
+            display: block;
             font-weight: 500;
         }
         </style>
@@ -31,18 +31,8 @@
             <a href="/" class="nav-link text-white p-2 fs-4">Administrador Licencias "Ejercito Militar"</a>
         </div>
     </nav>
-    <p><a href="/jtable" class="nav-link">ver licencias en jtable</a></p>
-    <div class="d-flex justify-content-end">
-        <button class="btn btn-primary m-4">
-            <a href="/registro" class="nav-link p-2">Crear Licencia</a>
-        </button>
-        <button class="btn btn-success m-4">
-            <a href="/tabla" class="nav-link p-2">Ver licencias</a>
-        </button>
-    </div>
     <section>
         @yield('contenido')
-        
     </section>
     <script>
         //creo la funcion loading

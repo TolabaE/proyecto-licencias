@@ -14,7 +14,10 @@ Route::get('/tabla',[TablaController::class,'todasLicencias']);
 Route::get('/jtable',[VistaController::class,'vistaJtabla']);
 
 //aqui estan todas las rutas para usar en la vista jtable
-Route::get('/licencias',[JtableController::class,'traerRegistroJtable'])->name('licencias');
+Route::get('/listar',[JtableController::class,'traerRegistroJtable'])->name('list');
+Route::post('/actualizar',[JtableController::class,'actualizarRegistroJtable'])->name('update');
+Route::post('/eliminar',[JtableController::class,'eliminarRegistroJtable'])->name('destroy');
+Route::post('/guardar',[JtableController::class,'guardarRegistroJtable'])->name('create');
 
 // ruta de todos los metodos en la tabla
 Route::get('/buscar/{id}',[TablaController::class,'buscarLicencia'])->name('buscar');
