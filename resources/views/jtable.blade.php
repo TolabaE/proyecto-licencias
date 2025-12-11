@@ -14,7 +14,7 @@
         const urlCrearLicencia = "{{ route('create')}}";
         
         $("#tablaLicencia").jtable({
-            title:"Registro Licencia",
+            title:"Registro Licencias",
             actions:{
                 listAction:function(postdata,jtParams){
                     return $.Deferred(function($dfd){
@@ -22,14 +22,14 @@
                             type:"GET",
                             url:urlController,
                             dataType:"json",
-                            success:function(response){
-                                let jtableResponse = {
-                                'Result': 'OK', // Debe ser 'OK' para mostrar los datos
-                                // Asumiendo que en response.result estan las listas de licencias cargadas.
-                                'Records': response.result,
-                                'TotalRecordCount':response.result.length
-                            };
-                                $dfd.resolve(jtableResponse)
+                            success:function(res){
+                                //una vez que obtengo las arreglo le paso al dfd.resolve espera 3 parametros.
+                                // {
+                                //     'Result': 'OK', // Debe ser 'OK' para mostrar los datos
+                                //     'Records': $licencias,
+                                //     'TotalRecordCount':count($licencias)
+                                // };
+                                $dfd.resolve(res)
                             },
                             error:function(error){
                                 console.log(error);
@@ -37,24 +37,30 @@
                         })
                     })
                 },
+                
                 createAction:function(posdata,jtParams){
                     return $.Deferred(function($dfd){
                         $.ajax({
                             method:"post",
                             url:urlCrearLicencia,
                             async:true,
-                            type:"json",
+                            dataType:"json",
                             data:posdata,
                             success:function(res){
-                                if (res.Result == "OK") {
+                                if(res.Result == "OK") {
                                     Swal.fire({
                                         icon: "success",
                                         title: "Licencia Cargada",
                                         text: "¡Proceso realizado exitosamente!",
                                         confirmButtonText: "OK",
                                     })
+                                    $("#tablaLicencia").jtable("load", function() {
+                                        // Una vez que se carga, resuelve el deferred para que JTable no muestre error.
+                                        $dfd.resolve(res); 
+                                    });
+                                }else{
+                                    $dfd.reject(res.Message || res.Record || 'Error al agregar una licencia.');
                                 }
-                                $("#tablaLicencia").jtable("load")
                             },
                             error:function(error){
                                 console.log(error);
@@ -64,25 +70,30 @@
                 },
                 updateAction:function(posdata,jtparams){
                     return $.Deferred(function($dfd){
+                        //paso el token csrf en el cuerpo de la peticion nose tuve muchos problemas con este forma. asi que la pase al app.js y le agrege al headers
+                        // const csrfToken = $('meta[name="csrf-token"]').attr('content');
+                        // const dataToSend = posdata + "&_token=" + csrfToken; //Token en el Body
                         $.ajax({
                             method:"post",
                             url:urlActualizarLicencia,
                             async:true,
-                            type:"json",
+                            dataType:"json",
                             data:posdata,
                             success:function(res){
-                                if (res.Result == "OK") {
+                                if(res.Result == "OK") {
                                     Swal.fire({
                                         icon: "success",
                                         title: "Licencia actualizada",
                                         text: "¡Proceso realizado exitosamente!",
                                         confirmButtonText: "OK",
                                     })
-                                    $("#tablaLicencia").jtable("load")
+                                    $dfd.resolve(res);
+                                }else{
+                                    $dfd.reject(res.Message || res.Record || 'Error desconocido al actualizar.');
                                 }
                             },
                             error:function(error){
-                                console.log(error);
+                                $dfd.reject('Error en el servidor. Estado HTTP: ' + error.status);
                             }
                         })
                     })
@@ -95,32 +106,26 @@
                             async:true,
                             data:posdata,
                             success:function(res){
-                                console.log(res.Result);
                                 Swal.fire({
                                     icon: "success",
                                     title: "Licencia Eliminada",
                                     text: "¡Proceso realizado exitosamente!",
                                     confirmButtonText: "OK",
                                 })
-                                $("#tablaLicencia").jtable("load")
+                                $dfd.resolve(res);
                             },
                             error:function(error){
                                 console.log(error);
                             }
                         })
                     })
-                },
+                }
             },
             fields:{
                 dni:{
                     title:"DNI",
                     display:function(res){
                         return res.record.dni
-                    },
-                    validation:{
-                        required:true,
-                        minlength: 8,
-                        maxlength: 9
                     }
                 },
                 fechaInicio:{
@@ -129,9 +134,7 @@
                         return res.record.fechaInicio
                     },
                     type: 'date',
-                    validation:{
-                        required:true
-                    }
+                    displayFormat: 'yy-mm-dd',
                 },
                 fechaFin:{
                     title:"Fecha Fin",
@@ -139,38 +142,25 @@
                         return res.record.fechaInicio
                     },
                     type: 'date',
-                    validation:{
-                        required:true
-                    }
+                    displayFormat: 'yy-mm-dd',
                 },
                 tipo:{
                     title:"Tipo",
                     display:function(res){
                         return res.record.tipo
                     },
-                    options: { 'Licencia Extraordinaria': 'Licencia Extraordinaria', 'Licencia Ordinaria': 'Licencia Ordinaria' },
-                    validation:{
-                        required:true
-                    }
+                    options: { 'Licencia Ordinaria': 'Licencia Ordinaria', 'Licencia Extraordinaria': 'Licencia Extraordinaria' }
                 },
                 provincia:{
                     title:"Provincia",
                     display:function(res){
                         return res.record.provincia
-                    },
-                    validation:{
-                        required:true
                     }
                 },
                 ordenDia:{
                     title:"Orden (OD)",
                     display:function(res){
                         return res.record.ordenDia
-                    },
-                    validation:{
-                        required: true,
-                        minlength: 6,
-                        maxlength: 10
                     }
                 },
                 localidad:{
@@ -196,19 +186,6 @@
                         return res.record.id
                     }
                 }
-            },
-            formCreated: function (event, data) {
-                console.log(data);
-                data.form.validationEngine();
-            },
-            //Validate form when it is being submitted
-            formSubmitting: function (event, data) {
-                return data.form.validationEngine('validate');
-            },
-            //Dispose validation logic when form is closed
-            formClosed: function (event, data) {
-                data.form.validationEngine('hide');
-                data.form.validationEngine('detach');
             }
         })
 
