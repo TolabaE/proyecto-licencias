@@ -54,6 +54,7 @@
                                         confirmButtonText: "OK",
                                     })
                                 }
+                                $("#tablaLicencia").jtable("load")
                             },
                             error:function(error){
                                 console.log(error);
@@ -77,6 +78,7 @@
                                         text: "¡Proceso realizado exitosamente!",
                                         confirmButtonText: "OK",
                                     })
+                                    $("#tablaLicencia").jtable("load")
                                 }
                             },
                             error:function(error){
@@ -100,6 +102,7 @@
                                     text: "¡Proceso realizado exitosamente!",
                                     confirmButtonText: "OK",
                                 })
+                                $("#tablaLicencia").jtable("load")
                             },
                             error:function(error){
                                 console.log(error);
@@ -113,6 +116,11 @@
                     title:"DNI",
                     display:function(res){
                         return res.record.dni
+                    },
+                    validation:{
+                        required:true,
+                        minlength: 8,
+                        maxlength: 9
                     }
                 },
                 fechaInicio:{
@@ -121,6 +129,9 @@
                         return res.record.fechaInicio
                     },
                     type: 'date',
+                    validation:{
+                        required:true
+                    }
                 },
                 fechaFin:{
                     title:"Fecha Fin",
@@ -128,24 +139,38 @@
                         return res.record.fechaInicio
                     },
                     type: 'date',
+                    validation:{
+                        required:true
+                    }
                 },
                 tipo:{
                     title:"Tipo",
                     display:function(res){
                         return res.record.tipo
                     },
-                    options: { 'Licencia Extraordinaria': 'Licencia Extraordinaria', 'Licencia Ordinaria': 'Licencia Ordinaria' }
+                    options: { 'Licencia Extraordinaria': 'Licencia Extraordinaria', 'Licencia Ordinaria': 'Licencia Ordinaria' },
+                    validation:{
+                        required:true
+                    }
                 },
                 provincia:{
                     title:"Provincia",
                     display:function(res){
                         return res.record.provincia
+                    },
+                    validation:{
+                        required:true
                     }
                 },
                 ordenDia:{
                     title:"Orden (OD)",
                     display:function(res){
                         return res.record.ordenDia
+                    },
+                    validation:{
+                        required: true,
+                        minlength: 6,
+                        maxlength: 10
                     }
                 },
                 localidad:{
@@ -171,6 +196,19 @@
                         return res.record.id
                     }
                 }
+            },
+            formCreated: function (event, data) {
+                console.log(data);
+                data.form.validationEngine();
+            },
+            //Validate form when it is being submitted
+            formSubmitting: function (event, data) {
+                return data.form.validationEngine('validate');
+            },
+            //Dispose validation logic when form is closed
+            formClosed: function (event, data) {
+                data.form.validationEngine('hide');
+                data.form.validationEngine('detach');
             }
         })
 
