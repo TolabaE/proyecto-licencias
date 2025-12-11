@@ -56,7 +56,7 @@ class JtableController extends Controller
         //verifico las respuesta del servidor
         if (isset($resultado['status']) && $resultado['status'] == 200){
             //aca tengo un gran problema, jquery necesita que el servidor me devuelva la nueva licencia con el id asignado, para agregarlo sin refrescar la pagina.
-            //voy a forzar refrescar la pagina para que se carge con su id 
+            //voy a forzar refrescar la pagina para que se carge con su id
             return response()->json(['Result'=>"OK",'Record'=>"success"]);
         }else{
             return response()->json(['Result'=>"ERROR",'Record'=>"Campos incompletos"]);

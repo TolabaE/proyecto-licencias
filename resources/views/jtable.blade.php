@@ -56,7 +56,7 @@
                                     })
                                     $("#tablaLicencia").jtable("load", function() {
                                         // Una vez que se carga, resuelve el deferred para que JTable no muestre error.
-                                        $dfd.resolve(res); 
+                                        $dfd.resolve(res);
                                     });
                                 }else{
                                     $dfd.reject(res.Message || res.Record || 'Error al agregar una licencia.');
@@ -126,7 +126,8 @@
                     title:"DNI",
                     display:function(res){
                         return res.record.dni
-                    }
+                    },
+                    type:'number'
                 },
                 fechaInicio:{
                     title:"Fecha inicio",
@@ -135,14 +136,20 @@
                     },
                     type: 'date',
                     displayFormat: 'yy-mm-dd',
+                    dateSettings: {
+                        dateFormat: 'dd/mm/yy', // Esto mostrará 2025-00-30 en el input
+                    }
                 },
                 fechaFin:{
                     title:"Fecha Fin",
                     display:function(res){
-                        return res.record.fechaInicio
+                        return res.record.fechaFin
                     },
                     type: 'date',
                     displayFormat: 'yy-mm-dd',
+                    dateSettings: {
+                        dateFormat: 'YY-MM-DD',// Esto mostrará 2025-00-30 en el input
+                    }
                 },
                 tipo:{
                     title:"Tipo",
@@ -155,13 +162,37 @@
                     title:"Provincia",
                     display:function(res){
                         return res.record.provincia
+                    },
+                    options:{
+                        'Buenos Aires':'Buenos Aires',
+                        'Entre Rios':'Entre Rios',
+                        'Chaco':'Chaco',
+                        'Catamarca':'Catamarca',
+                        'Chubut':'Chubut',
+                        'Cordoba':'Cordoba',
+                        'Corrientes':'Corrientes',
+                        'Mendoza':'Mendoza',
+                        'Misiones':'Misiones',
+                        'Neuquen':'Neuquen',
+                        'La pampa':'La pampa',
+                        'Rio Negro':'Rio Negro',
+                        'Jujuy':'Jujuy',
+                        'Formosa':'Formosa',
+                        'San Juan':'San Juan',
+                        'San Luis':'San Luis',
+                        'Santiago del Estero':'Santiago del Estero',
+                        'Salta':'Salta',
+                        'Santa Fe':'Santa Fe',
+                        'Tucuman':'Tucuman',
+                        'Tierra del Fuego':'Tierra del Fuego',
+                        'Ciudad Autonoma de Buenos Aires':'Ciudad Autonoma de Buenos Aires'
                     }
                 },
                 ordenDia:{
                     title:"Orden (OD)",
                     display:function(res){
                         return res.record.ordenDia
-                    }
+                    },
                 },
                 localidad:{
                     title:"localidad",
@@ -186,7 +217,10 @@
                         return res.record.id
                     }
                 }
-            }
+            },
+            // formCreated:function(event,data){
+            //     console.log(data.form)
+            // }
         })
 
         $("#tablaLicencia").jtable("load")

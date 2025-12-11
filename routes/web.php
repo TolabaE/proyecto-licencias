@@ -19,13 +19,6 @@ Route::post('/actualizar',[JtableController::class,'actualizarRegistroJtable'])-
 Route::post('/eliminar',[JtableController::class,'eliminarRegistroJtable'])->name('destroy');
 Route::post('/guardar',[JtableController::class,'guardarRegistroJtable'])->name('create');
 
-// Ruta de prueba TEMPORAL
-Route::post('/prueba-ajax', function (Illuminate\Http\Request $request) {
-    // Si esto funciona, el problema está en la ruta original o middleware
-    \Illuminate\Support\Facades\Log::info('Ruta de prueba alcanzada con éxito.', $request->all());
-    return response()->json(['Result' => 'OK']);
-});
-
 // ruta de todos los metodos en la tabla
 Route::get('/buscar/{id}',[TablaController::class,'buscarLicencia'])->name('buscar');
 Route::get('/delete/{id}',[TablaController::class,'eliminarLicencia'])->name('eliminar');
